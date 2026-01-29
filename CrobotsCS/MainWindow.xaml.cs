@@ -128,7 +128,7 @@ public partial class MainWindow : Window {
         _robotViewModels.Clear();
         BattleFieldCanvas.Children.Clear();
         LoadDefaultRobots();
-        CycleText.Text = Strings.Cycle(0);
+        CycleText.Text = string.Format(Strings.Cycle, 0);
     }
 
     private void LoadRobotButton_Click(object sender, RoutedEventArgs e) {
@@ -148,7 +148,7 @@ public partial class MainWindow : Window {
                     }
                 });
             } catch (Exception ex) {
-                MessageBox.Show(Strings.ErrorLoadingRobot(ex.Message), Strings.AppTitle,
+                MessageBox.Show(string.Format(Strings.ErrorLoadingRobot, ex.Message), Strings.AppTitle,
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -158,7 +158,7 @@ public partial class MainWindow : Window {
         _battleField.Update();
         RenderBattleField();
         UpdateRobotViewModels();
-        CycleText.Text = Strings.Cycle(_battleField.CycleCount);
+        CycleText.Text = string.Format(Strings.Cycle, _battleField.CycleCount);
 
         foreach (var robot in _battleField.Robots.Where(r => r.IsAlive)) {
             if (Random.Shared.Next(100) < 5) {
@@ -222,8 +222,8 @@ public partial class MainWindow : Window {
 
     private void BattleField_BattleWon(object? sender, Robot winner) {
         StopGame();
-        StatusText.Text = Strings.Winner(winner.Name);
-        MessageBox.Show(Strings.Winner(winner.Name), Strings.BattleComplete,
+        StatusText.Text = string.Format(Strings.Winner, winner.Name);
+        MessageBox.Show(string.Format(Strings.Winner, winner.Name), Strings.BattleComplete,
             MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
