@@ -3,19 +3,13 @@
 using System;
 using System.Windows;
 
-public class Missile {
-    public Point Position { get; set; }
-    public double Heading { get; set; }
+public class Missile(Robot owner, Point position, double heading) {
+    public Point Position { get; set; } = position;
+    public double Heading { get; set; } = heading;
     public double Speed { get; } = 10.0;
-    public Robot Owner { get; }
+    public Robot Owner { get; } = owner;
     public int Damage { get; } = 10;
     public bool IsActive { get; set; } = true;
-
-    public Missile(Robot owner, Point position, double heading) {
-        Owner = owner;
-        Position = position;
-        Heading = heading;
-    }
 
     public void Update() {
         if (!IsActive) {

@@ -233,15 +233,11 @@ public partial class MainWindow : Window {
     }
 }
 
-public class RobotViewModel : INotifyPropertyChanged {
-    private readonly Robot _robot;
-
-    public RobotViewModel(Robot robot) => _robot = robot;
-
-    public string Name => _robot.Name;
-    public int Health => _robot.Health;
-    public Brush ColorBrush => new SolidColorBrush(_robot.Color);
-    public string StatusText => _robot.IsAlive ? Strings.Alive : Strings.Dead;
+public class RobotViewModel(Robot robot) : INotifyPropertyChanged {
+    public string Name => robot.Name;
+    public int Health => robot.Health;
+    public Brush ColorBrush => new SolidColorBrush(robot.Color);
+    public string StatusText => robot.IsAlive ? Strings.Alive : Strings.Dead;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
