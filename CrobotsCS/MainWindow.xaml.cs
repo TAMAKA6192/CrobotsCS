@@ -148,7 +148,7 @@ public partial class MainWindow : Window {
                     }
                 });
             } catch (Exception ex) {
-                MessageBox.Show(string.Format(Strings.ErrorLoadingRobot, ex.Message), Strings.AppTitle,
+                _ = MessageBox.Show(string.Format(Strings.ErrorLoadingRobot, ex.Message), Strings.AppTitle,
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -223,7 +223,7 @@ public partial class MainWindow : Window {
     private void BattleField_BattleWon(object? sender, Robot winner) {
         StopGame();
         StatusText.Text = string.Format(Strings.Winner, winner.Name);
-        MessageBox.Show(string.Format(Strings.Winner, winner.Name), Strings.BattleComplete,
+        _ = MessageBox.Show(string.Format(Strings.Winner, winner.Name), Strings.BattleComplete,
             MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
