@@ -1,4 +1,4 @@
-﻿namespace CrobotsCS.Controllers;
+namespace CrobotsCS.Controllers;
 
 using CrobotsCS.Models;
 using System;
@@ -6,41 +6,41 @@ using System.Collections.Generic;
 
 public class SimpleRobotController : IRobotController
 {
-    private readonly string name;
-    private readonly Action<RobotApi> behavior;
-    private RobotApi? api;
+    private readonly string _name;
+    private readonly Action<RobotApi> _behavior;
+    private RobotApi? _api;
 
     public SimpleRobotController(string name, Action<RobotApi> behavior)
     {
-        this.name = name;
-        this.behavior = behavior;
+        this._name = name;
+        this._behavior = behavior;
     }
 
     public void Execute(Robot robot)
     {
-        api ??= new RobotApi(robot);
-        behavior(api);
+        _api ??= new RobotApi(robot);
+        _behavior(_api);
     }
 }
 
 public class RobotApi
 {
-    private readonly Robot robot;
-    private readonly Random random = new();
+    private readonly Robot _robot;
+    private readonly Random _random = new();
 
     public RobotApi(Robot robot)
     {
-        this.robot = robot;
+        this._robot = robot;
     }
 
-    public double X => robot.Position.X;
-    public double Y => robot.Position.Y;
-    public double Heading => robot.Heading;
-    public int Health => robot.Health;
+    public double X => _robot.Position.X;
+    public double Y => _robot.Position.Y;
+    public double Heading => _robot.Heading;
+    public int Health => _robot.Health;
 
-    public void Drive(double heading, double speed) => robot.Drive(heading, speed);
-    public int Scan(double direction, double resolution) => robot.Scan(direction, resolution);
-    public void Cannon(double direction, double range) => robot.Cannon(direction, range);
+    public void Drive(double heading, double speed) => _robot.Drive(heading, speed);
+    public int Scan(double direction, double resolution) => _robot.Scan(direction, resolution);
+    public void Cannon(double direction, double range) => _robot.Cannon(direction, range);
 
-    public int Random(int max) => random.Next(max);
+    public int Random(int max) => _random.Next(max);
 }

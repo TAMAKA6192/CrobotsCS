@@ -1,4 +1,4 @@
-﻿namespace CrobotsCS.Game;
+namespace CrobotsCS.Game;
 
 using System;
 using System.Collections.Generic;
@@ -11,11 +11,11 @@ public class BattleField {
     public const int Width = 1000;
     public const int Height = 1000;
 
-    private readonly List<Robot> robots = [];
-    private readonly List<Missile> missiles = [];
+    private readonly List<Robot> _robots = [];
+    private readonly List<Missile> _missiles = [];
 
-    public IReadOnlyList<Robot> Robots => robots.AsReadOnly();
-    public IReadOnlyList<Missile> Missiles => missiles.AsReadOnly();
+    public IReadOnlyList<Robot> Robots => _robots.AsReadOnly();
+    public IReadOnlyList<Missile> Missiles => _missiles.AsReadOnly();
     public int CycleCount { get; private set; }
 
     public event EventHandler<Robot>? RobotDestroyed;
@@ -23,19 +23,19 @@ public class BattleField {
 
     public void AddRobot(Robot robot) {
         ArgumentNullException.ThrowIfNull(robot);
-        robots.Add(robot);
+        _robots.Add(robot);
     }
 
     public void Clear() {
-        robots.Clear();
-        missiles.Clear();
+        _robots.Clear();
+        _missiles.Clear();
         CycleCount = 0;
     }
 
     public void Update() {
         CycleCount++;
 
-        foreach (var robot in robots) {
+        foreach (var robot in _robots) {
             robot.Update();
             ConstrainRobotPosition(robot);
         }
@@ -51,7 +51,7 @@ public class BattleField {
     }
 
     private void ProcessMissiles() {
-        foreach (var missile in missiles.ToList()) {
+        foreach (var missile in _missiles.ToList()) {
             if (!missile.IsActive) {
                 continue;
             }
@@ -64,7 +64,7 @@ public class BattleField {
                 continue;
             }
 
-            foreach (var robot in robots) {
+            foreach (var robot in _robots) {
                 if (missile.CheckCollision(robot)) {
                     robot.TakeDamage(missile.Damage);
                     missile.IsActive = false;
@@ -78,11 +78,11 @@ public class BattleField {
             }
         }
 
-        _ = missiles.RemoveAll(m => !m.IsActive);
+        _ = _missiles.RemoveAll(m => !m.IsActive);
     }
 
     private void CheckForWinner() {
-        var aliveRobots = robots.Where(r => r.IsAlive).ToList();
+        var aliveRobots = _robots.Where(r => r.IsAlive).ToList();
         if (aliveRobots.Count == 1) {
             BattleWon?.Invoke(this, aliveRobots[0]);
         }
@@ -94,14 +94,14 @@ public class BattleField {
         }
 
         var missile = new Missile(robot, robot.Position, robot.TurretHeading);
-        missiles.Add(missile);
+        _missiles.Add(missile);
     }
 
     public Robot? ScanForTarget(Robot scanner, double direction, double resolution) {
         var scanAngleStart = direction - (resolution / 2);
         var scanAngleEnd = direction + (resolution / 2);
 
-        return robots
+        return _robots
             .Where(r => r != scanner && r.IsAlive)
             .Select(r => new { Robot = r, Angle = scanner.AngleTo(r), Distance = scanner.DistanceTo(r) })
             .Where(x => x.Distance < 700 && IsAngleInRange(x.Angle, scanAngleStart, scanAngleEnd))

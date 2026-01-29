@@ -19,10 +19,12 @@ using Microsoft.Win32;
 using Path = System.IO.Path;
 
 public partial class MainWindow : Window {
-    private readonly BattleField battleField = new();
-    private readonly DispatcherTimer gameTimer = new();
-    private readonly ObservableCollection<RobotViewModel> robotViewModels = [];
-    private bool isRunning;
+    private readonly BattleField _battleField = new();
+    private readonly DispatcherTimer _gameTimer = new();
+    private readonly ObservableCollection<RobotViewModel> _robotViewModels = [];
+#pragma warning disable CS0414 // フィールドは割り当てられていますがその値は使用されていません
+    private bool _isRunning;
+#pragma warning restore CS0414 // フィールドは割り当てられていますがその値は使用されていません
 
     public MainWindow() {
         InitializeComponent();
@@ -38,11 +40,11 @@ public partial class MainWindow : Window {
         LoadRobotButton.Content = Strings.LoadRobotButton;
         StatusText.Text = Strings.Ready;
 
-        gameTimer.Tick += GameTimer_Tick;
-        battleField.RobotDestroyed += BattleField_RobotDestroyed;
-        battleField.BattleWon += BattleField_BattleWon;
+        _gameTimer.Tick += GameTimer_Tick;
+        _battleField.RobotDestroyed += BattleField_RobotDestroyed;
+        _battleField.BattleWon += BattleField_BattleWon;
 
-        RobotListView.ItemsSource = robotViewModels;
+        RobotListView.ItemsSource = _robotViewModels;
     }
 
     private void LoadDefaultRobots() {
@@ -86,34 +88,34 @@ public partial class MainWindow : Window {
 
         var controller = new SimpleRobotController(name, behavior);
         var robot = new Robot(name, position, color, controller);
-        battleField.AddRobot(robot);
+        _battleField.AddRobot(robot);
 
         var viewModel = new RobotViewModel(robot);
-        robotViewModels.Add(viewModel);
+        _robotViewModels.Add(viewModel);
     }
 
     private void StartButton_Click(object sender, RoutedEventArgs e) {
-        if (battleField.Robots.Count < 2) {
+        if (_battleField.Robots.Count < 2) {
             _ = MessageBox.Show(Strings.MinimumTwoRobots, Strings.AppTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
 
-        isRunning = true;
+        _isRunning = true;
         StartButton.IsEnabled = false;
         StopButton.IsEnabled = true;
         LoadRobotButton.IsEnabled = false;
         StatusText.Text = Strings.BattleInProgress;
 
         var speed = (int)SpeedSlider.Value;
-        gameTimer.Interval = TimeSpan.FromMilliseconds(1000.0 / speed);
-        gameTimer.Start();
+        _gameTimer.Interval = TimeSpan.FromMilliseconds(1000.0 / speed);
+        _gameTimer.Start();
     }
 
     private void StopButton_Click(object sender, RoutedEventArgs e) => StopGame();
 
     private void StopGame() {
-        isRunning = false;
-        gameTimer.Stop();
+        _isRunning = false;
+        _gameTimer.Stop();
         StartButton.IsEnabled = true;
         StopButton.IsEnabled = false;
         LoadRobotButton.IsEnabled = true;
@@ -122,8 +124,8 @@ public partial class MainWindow : Window {
 
     private void ResetButton_Click(object sender, RoutedEventArgs e) {
         StopGame();
-        battleField.Clear();
-        robotViewModels.Clear();
+        _battleField.Clear();
+        _robotViewModels.Clear();
         BattleFieldCanvas.Children.Clear();
         LoadDefaultRobots();
         CycleText.Text = Strings.Cycle(0);
@@ -153,14 +155,14 @@ public partial class MainWindow : Window {
     }
 
     private void GameTimer_Tick(object? sender, EventArgs e) {
-        battleField.Update();
+        _battleField.Update();
         RenderBattleField();
         UpdateRobotViewModels();
-        CycleText.Text = Strings.Cycle(battleField.CycleCount);
+        CycleText.Text = Strings.Cycle(_battleField.CycleCount);
 
-        foreach (var robot in battleField.Robots.Where(r => r.IsAlive)) {
+        foreach (var robot in _battleField.Robots.Where(r => r.IsAlive)) {
             if (Random.Shared.Next(100) < 5) {
-                battleField.FireMissile(robot);
+                _battleField.FireMissile(robot);
             }
         }
     }
@@ -171,7 +173,7 @@ public partial class MainWindow : Window {
         var scaleX = BattleFieldCanvas.ActualWidth / BattleField.Width;
         var scaleY = BattleFieldCanvas.ActualHeight / BattleField.Height;
 
-        foreach (var missile in battleField.Missiles) {
+        foreach (var missile in _battleField.Missiles) {
             var ellipse = new Ellipse
             {
                 Width = 4,
@@ -183,7 +185,7 @@ public partial class MainWindow : Window {
             _ = BattleFieldCanvas.Children.Add(ellipse);
         }
 
-        foreach (var robot in battleField.Robots.Where(r => r.IsAlive)) {
+        foreach (var robot in _battleField.Robots.Where(r => r.IsAlive)) {
             var robotEllipse = new Ellipse
             {
                 Width = 20,
@@ -210,7 +212,7 @@ public partial class MainWindow : Window {
     }
 
     private void UpdateRobotViewModels() {
-        foreach (var vm in robotViewModels) {
+        foreach (var vm in _robotViewModels) {
             vm.Refresh();
         }
     }
@@ -232,14 +234,14 @@ public partial class MainWindow : Window {
 }
 
 public class RobotViewModel : INotifyPropertyChanged {
-    private readonly Robot robot;
+    private readonly Robot _robot;
 
-    public RobotViewModel(Robot robot) => this.robot = robot;
+    public RobotViewModel(Robot robot) => _robot = robot;
 
-    public string Name => robot.Name;
-    public int Health => robot.Health;
-    public Brush ColorBrush => new SolidColorBrush(robot.Color);
-    public string StatusText => robot.IsAlive ? Strings.Alive : Strings.Dead;
+    public string Name => _robot.Name;
+    public int Health => _robot.Health;
+    public Brush ColorBrush => new SolidColorBrush(_robot.Color);
+    public string StatusText => _robot.IsAlive ? Strings.Alive : Strings.Dead;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

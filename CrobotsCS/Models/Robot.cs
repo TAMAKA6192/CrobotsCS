@@ -1,4 +1,4 @@
-﻿namespace CrobotsCS.Models;
+namespace CrobotsCS.Models;
 
 using System;
 using System.Windows;
@@ -20,10 +20,10 @@ public class Robot {
     public bool IsAlive => Health > 0;
     public System.Windows.Media.Color Color { get; set; }
 
-    private double targetSpeed;
-    private double targetHeading;
-    private double targetTurretHeading;
-    private readonly IRobotController? controller;
+    private double _targetSpeed;
+    private double _targetHeading;
+    private double _targetTurretHeading;
+    private readonly IRobotController? _controller;
 
     public Robot(string name, Point startPosition, System.Windows.Media.Color color, IRobotController? controller = null) {
         Name = name;
@@ -31,7 +31,7 @@ public class Robot {
         Color = color;
         Heading = Random.Shared.Next(360);
         TurretHeading = Heading;
-        this.controller = controller;
+        this._controller = controller;
     }
 
     public void Update() {
@@ -39,11 +39,11 @@ public class Robot {
             return;
         }
 
-        controller?.Execute(this);
+        _controller?.Execute(this);
 
-        Speed = Math.Clamp(Speed + (Math.Sign(targetSpeed - Speed) * 0.5), 0, MaxSpeed);
-        Heading = NormalizeAngle(Heading + Math.Clamp(targetHeading - Heading, -5, 5));
-        TurretHeading = NormalizeAngle(TurretHeading + Math.Clamp(targetTurretHeading - TurretHeading, -TurretRotationSpeed, TurretRotationSpeed));
+        Speed = Math.Clamp(Speed + (Math.Sign(_targetSpeed - Speed) * 0.5), 0, MaxSpeed);
+        Heading = NormalizeAngle(Heading + Math.Clamp(_targetHeading - Heading, -5, 5));
+        TurretHeading = NormalizeAngle(TurretHeading + Math.Clamp(_targetTurretHeading - TurretHeading, -TurretRotationSpeed, TurretRotationSpeed));
 
         var radians = Heading * Math.PI / 180.0;
         Position = new Point(
@@ -53,17 +53,17 @@ public class Robot {
     }
 
     public void Drive(double heading, double speed) {
-        targetHeading = NormalizeAngle(heading);
-        targetSpeed = Math.Clamp(speed, 0, MaxSpeed);
+        _targetHeading = NormalizeAngle(heading);
+        _targetSpeed = Math.Clamp(speed, 0, MaxSpeed);
     }
 
     public int Scan(double direction, double resolution) {
-        targetTurretHeading = NormalizeAngle(direction);
+        _targetTurretHeading = NormalizeAngle(direction);
         return 0;
     }
 
     public bool Cannon(double direction, double range) {
-        targetTurretHeading = NormalizeAngle(direction);
+        _targetTurretHeading = NormalizeAngle(direction);
         return true;
     }
 
