@@ -107,7 +107,8 @@ public partial class MainWindow : Window {
         StatusText.Text = Strings.BattleInProgress;
 
         var speed = (int)SpeedSlider.Value;
-        _gameTimer.Interval = TimeSpan.FromMilliseconds(1000.0 / speed);
+        //_gameTimer.Interval = TimeSpan.FromMilliseconds(1000.0 / speed);
+        _gameTimer.Interval = TimeSpan.FromMilliseconds(100.0 / speed);
         _gameTimer.Start();
     }
 
