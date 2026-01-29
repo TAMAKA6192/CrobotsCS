@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Crobots - ロボット戦闘アリーナ</value>
+  </data>
+  <data name="StartButton" xml:space="preserve">
+    <value>戦闘開始</value>
+  </data>
+  <data name="StopButton" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="ResetButton" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="LoadRobotButton" xml:space="preserve">
+    <value>ロボット読込</value>
+  </data>
+  <data name="BattleSpeed" xml:space="preserve">
+    <value>戦闘速度:</value>
+  </data>
+  <data name="RobotName" xml:space="preserve">
+    <value>ロボット名</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>体力</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状態</value>
+  </data>
+  <data name="Winner" xml:space="preserve">
+    <value>勝者: {0}</value>
+  </data>
+  <data name="BattleInProgress" xml:space="preserve">
+    <value>戦闘中</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>準備完了</value>
+  </data>
+  <data name="LoadRobotDialog" xml:space="preserve">
+    <value>ロボットスクリプトを選択</value>
+  </data>
+  <data name="RobotScriptFilter" xml:space="preserve">
+    <value>C# スクリプトファイル (*.cs)|*.cs|すべてのファイル (*.*)|*.*</value>
+  </data>
+  <data name="ErrorLoadingRobot" xml:space="preserve">
+    <value>ロボットの読み込みエラー: {0}</value>
+  </data>
+  <data name="MinimumTwoRobots" xml:space="preserve">
+    <value>戦闘を開始するには、最低2体のロボットが必要です。</value>
+  </data>
+  <data name="BattleComplete" xml:space="preserve">
+    <value>戦闘終了</value>
+  </data>
+  <data name="Cycle" xml:space="preserve">
+    <value>サイクル: {0}</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>生存</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>破壊</value>
+  </data>
+</root>

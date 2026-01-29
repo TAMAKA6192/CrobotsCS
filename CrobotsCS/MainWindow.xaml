@@ -5,8 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrobotsCS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Crobots" Height="800" Width="1400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
 
+        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="10">
+            <Canvas x:Name="BattleFieldCanvas" Background="#FFE8E8E8" ClipToBounds="True"/>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                <Button x:Name="StartButton" Content="Start Battle" 
+                        Height="35" Margin="0,0,0,5" Click="StartButton_Click"
+                        FontSize="14" FontWeight="Bold"/>
+                <Button x:Name="StopButton" Content="Stop" 
+                        Height="30" Margin="0,0,0,5" Click="StopButton_Click"
+                        IsEnabled="False"/>
+                <Button x:Name="ResetButton" Content="Reset" 
+                        Height="30" Margin="0,0,0,5" Click="ResetButton_Click"/>
+                <Button x:Name="LoadRobotButton" Content="Load Robot" 
+                        Height="30" Margin="0,0,0,10" Click="LoadRobotButton_Click"/>
+                
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Battle Speed:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Slider x:Name="SpeedSlider" Width="150" Minimum="1" Maximum="10" Value="5"
+                            TickFrequency="1" IsSnapToTickEnabled="True"
+                            VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock x:Name="StatusText" Grid.Row="1" Text="Ready" 
+                       FontSize="14" FontWeight="Bold" Margin="0,0,0,10"
+                       TextWrapping="Wrap"/>
+
+            <ListView x:Name="RobotListView" Grid.Row="2" Margin="0,0,0,10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Robot" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Width="12" Height="12" Fill="{Binding ColorBrush}" Margin="0,0,5,0"/>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="HP" DisplayMemberBinding="{Binding Health}" Width="40"/>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding StatusText}" Width="60"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <TextBlock x:Name="CycleText" Grid.Row="3" Text="Cycle: 0" 
+                       FontSize="12" HorizontalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Window>
